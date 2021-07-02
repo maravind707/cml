@@ -9,6 +9,7 @@ jobs:
       - name: cml_run
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ tidal-anvil-286409-af037618b56c.json }}
         run: |
           pip install -r requirements.txt
           python train.py
