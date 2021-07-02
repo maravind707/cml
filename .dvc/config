@@ -1,4 +1,4 @@
 [core]
-    remote = gcs
-['remote "gcs"']
-    url = gs://dvc-sample
+    remote = storage
+['remote "storage"']
+    url = s3://dvc-demo-bucket
