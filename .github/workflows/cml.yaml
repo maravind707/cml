@@ -20,8 +20,8 @@ jobs:
       - name: cml
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: "AKIAUQ5KTVJC2NLB2PSJ"
+          AWS_SECRET_ACCESS_KEY: "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"
         run: |
           pip install -r requirements.txt
           
