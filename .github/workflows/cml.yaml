@@ -1,5 +1,5 @@
 name: train-my-model
-on: [merge]
+on: [pull_request]
 jobs:
   run:
     runs-on: [ubuntu-latest]
