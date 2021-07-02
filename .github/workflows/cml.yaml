@@ -5,11 +5,13 @@ on: [push]
 jobs:
   run:
     runs-on: [ubuntu-latest]
-
+  
     steps:
       - uses: actions/checkout@v2
 
       - uses: iterative/setup-cml@v1
+
+      - uses: iterative/setup-dvc@v1
 
       - uses: actions/setup-python@v2
         with:
@@ -18,10 +20,22 @@ jobs:
       - name: cml
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: "AKIAUQ5KTVJC2NLB2PSJ"
+          AWS_SECRET_ACCESS_KEY: "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"
         run: |
-          pip3 install -r requirements.txt
-          python train.py
+          pip install -r requirements.txt
           
-          cat metrics.txt >> report.md
-          cml-publish confusion_matrix.png --md --title 'confusion-matrix' >> report.md
+          # Pull dataset with DVC 
+          dvc pull data
+          
+          # Reproduce pipeline if any changes detected in dependencies
+          dvc repro 
+          
+          # Use DVC metrics diff to compare metrics to master
+          git fetch --prune --unshallow
+          dvc metrics diff --show-md experiment >> report.md
+          
+          # Add figure to report
+          dvc plots diff --target loss.csv --show-vega experiment > vega.json
+          vl2png vega.json -s 1.3 | cml-publish --md >> report.md
           cml-send-comment report.md 
