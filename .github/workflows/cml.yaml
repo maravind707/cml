@@ -12,6 +12,7 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ tidal-anvil-286409-af037618b56c.json }}
         run: |
           pip install -r requirements.txt
+          dvc pull data
           python train.py
 
           cat metrics.txt >> report.md
